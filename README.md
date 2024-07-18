@@ -1,2 +1,2 @@
-# opticalcomputer
-Everything related to the CERN MicroClub webfest 2024 project to build an Optical Computer and use it to simulate a quantum computer.
+# $100 Optical Computer
+Everything related to the CERN MicroClub webfest 2024 project to build an Optical Computer and use it to simulate a quantum computer. We haven't started yet...
