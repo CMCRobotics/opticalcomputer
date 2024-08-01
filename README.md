@@ -1,6 +1,7 @@
 # $100 Optical Computer
-Everything related to the CERN MicroClub webfest 2024 project to build an Optical Computer and use it to simulate a quantum computer. We haven't started yet...
+Everything related to the CERN MicroClub webfest 2024 project to build an Optical Computer and use it to simulate a quantum computer. We haven't finished yet...
 
+![WhatsApp Image 2024-07-30 at 14 07 11](https://github.com/user-attachments/assets/27793d4d-9b99-4daa-95ec-8111b729c122)
 
 #### Task 1: Wire everything together.
 
@@ -156,3 +157,18 @@ In summary:
 
 Here is someone doing something very similar to what we are doing:
 https://forums.raspberrypi.com/viewtopic.php?t=325328
+
+Some notes on progress so far and things we need to do:
+We've stripped the screens and put them in the box, the 100x20 (5x20x20) aluminium and the L brackets work very well as a cheap optical table. 
+The camera field of view is good, needs focusing.
+The power supply for the LEDs isn't adequate - it is causing the Pi to brown-out. A separate 5V connection is needed, I'll see if I can find something suitable. 
+The camera needs a longer cable, it came out today (1/8) and gave a very odd/wonky video feed when trying to view the camera. We'll need to sort that out somehow. 
+I also read some disturbing reports on the quality of the 8x8 rgb led arrays I've been buying, which isn't surprising as a good one costs £25 and these cost about £1. We should do some more testing, it's probably worth fixing up both and choosing the least wonky. 
+
+The first image from the camera looked like this, it's pretty close but the focus needs adjusting.
+![test](https://github.com/user-attachments/assets/9a56a3b4-5098-45a1-a9bf-494d55001d80)
+
+As a reminder, today we also had some fun with the polarizer, with the LCDs unpowered (i.e. 100% opaque.. as much as they go), if we turned on the RGB leds we basically couldn't see them with the camera. However putting a polarizer between the two made it much more tranmissive. This is an interesting quantum effect, and probably something to do with the fact that one screen is facing forward, and the other backwards. We should look at this in more detail when we have things together.
+
+Raspberry Pi Connect is working, just about. The mouse is very slow. But the graphics work (except the camera when the cable was wonky). 
+
