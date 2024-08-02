@@ -172,3 +172,5 @@ As a reminder, today we also had some fun with the polarizer, with the LCDs unpo
 
 Raspberry Pi Connect is working, just about. The mouse is very slow. But the graphics work (except the camera when the cable was wonky). 
 
+REMINDER: Modify the boot.txt to turn off the LED on the pi on the board. Probably something like this: https://forum.magicmirror.builders/topic/17038/how-to-turn-off-raspberry-pi-leds/4 .
+
