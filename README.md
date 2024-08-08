@@ -174,3 +174,21 @@ Raspberry Pi Connect is working, just about. The mouse is very slow. But the gra
 
 REMINDER: Modify the boot.txt to turn off the LED on the pi on the board. Probably something like this: https://forum.magicmirror.builders/topic/17038/how-to-turn-off-raspberry-pi-leds/4 .
 
+Status and to do (6pm 8th August):
+Status: The box is working. We have 64 visible leds, addressable and controllable. 2 LCD planes, though one is a little out of alignment, but not a huge deal I think - can fix this with some more hot glue tomorrow.
+We have some internal reflections, but with cropping should be able to exclude this. Ultimately. WE HAVE A WORKING OPTICAL COMPUTER! We just need to understand the inputs and outputs logically, rather than just as something pretty.
+![Screenshot 2024-08-08 at 14 24 51](https://github.com/user-attachments/assets/46d5dd66-d6fc-4d25-8630-7598eb46e7d4)
+
+To do:
+We're talking with Mael tomorrow, he will have some ideas about quantum stuff we can do.
+Until then we need to figure out calibration, and the basic level of our software/routines.
+0) Karthik please document your mods to the boot overlay, I know it's just one line, but it's a very important line! 
+1) we need a python function/script/whatever that will take a picture (ideally max resolution from the sensor), then crop it to the area we care about, and rotate it 180, as it's upside down. It should also include manual exposure control. This is one job.
+1.1) transform the captured image back into a nice matrix, which we can scale (i.e. if we are working with 1 virtual pixel that is the whole array, or 64 etc.) - and ideally the pixel mappings are fixed and quantised to work with the actual physical pixels we have somehow! Also a job.
+3) We need to start calibration, for this we should be able to address the LEDs and the LCD pixels individually, so we should have a wrapper for this; we're not far off it with the libraries we are already using. As discussed already, calibration 1 is 50% brightness LED, 50% on screen 1, and 50% on screen 2. Then measure the output using the script for 1. This is the biggest part, and most intellectually demanding I think. We need to have a variable in there somewhere (LED light input probably, close to 250, unless we can do a miracle with the exposure in 1. ) We'll also need to try by experiment what levels of granularity we can distinguish. Ideally this process can be automated to run in a batch and give a summary result (i.e. I tested all 255 input levels for a single pixel, and actually we only see 200 different outputs with the screens transparent, etc. and then with the first screen set to 1..2..100% obscurity etc.)
+4) Install jupyter and set it up as sudo, so we can just use a workbook instead of a mash up of terminal and screen sharing. Probably not a priority as we're behind the CERN firewall so can't open a port (I can do this at home.. ) and on the Saturday you'll want the device there, not in my house! Another option would be to make it a local self-contained wifi server, with jupyter running. but this will slow development, as you'll only be able to connect to the device and not the internet. Suggest we park this for now.
+5) Multiplication. Write something that builds on top of the calibration to allow A*B*C=D multiplications.. for up to 64 pixels (initially.. we might be able to split the pixels, but let's not bother with that now).
+6) Quantumness. Something that builds on our multiplication to simulate a qubit, or a qutrit. We should set a 'state' i.e. analog variable for the energy of our quantum system in R and G (or R and B etc.. any two colours for starters). And then we can operate on that to reduce the energy by setting values in the LCD matrix; this isn't any different to multiplication - yet; but perhaps we can simulate quantum gates in software; or a way of connecting the pixels together and iterating. I don't know yet!
+7) Anything else you guys can think of!
+8) Update this repo, tidy it up, include the latest pinout that we are actually using, etc. and make it pretty. We also need to do the Buidl thing for Dora Hacks, if anyone is super keen on understanding how they work, go ahead!
+
