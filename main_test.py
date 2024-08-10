@@ -29,8 +29,6 @@ if __name__ == "__main__":
         print(img.shape)
         img = ProcessingUtils.crop_img(img)
         mesh_img = ProcessingUtils.draw_mesh(img)
-        # cv2.imshow("MESH", mesh_img)
-        # cv2.imwrite("mesh_img.png", mesh_img)
         
         w,h,c = mesh_img.shape
         cell_h = h // 8
@@ -38,7 +36,6 @@ if __name__ == "__main__":
         pts1 = np.float32([[56,65],[368,52],[28,387],[389,390]])
         pts2 = np.float32([[0,0],[300,0],[0,300],[300,300]])
 
-        # Step 3: Compute the perspective transform matrix
         M = cv2.getPerspectiveTransform(pts1, pts2)
         warped_image = cv2.warpPerspective(mesh_img, M, (w, h))
         array_camera_res = []
@@ -49,7 +46,6 @@ if __name__ == "__main__":
                 cell = cell.flatten()
                 cell = cell[cell != 255]
                 if cell.size > 0:
-                    # print(cell)
                     max_val = np.max(cell)
                 else:
                     max_val = 255
@@ -58,14 +54,12 @@ if __name__ == "__main__":
         
         array_camera_res = np.array(array_camera_res)
         
+        with open('optical.json', 'w') as json_file:
+            json.dump(array_camera_res.tolist(), json_file)
+        np.save('optical.npy',array_camera_res)
         print(array_camera_res)
         cv2.imshow("MESH GRID",mesh_img)
         if cv2.waitKey(1) & 0xFF == ord("q"):
             cam.stop()
             cv2.destroyAllWindows()
         
-        
-
-        # if cv2.waitKey(1) & 0xFF == ord("q") or True:
-        # cam.stop()
-        # cv2.destroyAllWindows()

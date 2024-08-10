@@ -89,7 +89,7 @@ if __name__ == '__main__':
 		spi1 = SpiDev(1, 1)
 		spi.mode = 0b10  # [CPOL|CPHA] -> polarity 1, phase 0
 		spi1.mode = 0b10
-
+		
 		# default value
 		# spi.lsbfirst = False  # set to MSB_FIRST / most significant bit first
 		spi.max_speed_hz = 64000000
@@ -101,12 +101,9 @@ if __name__ == '__main__':
 		pixels1 = neopixel.NeoPixel(board.D18, 64, brightness=1)
 #		current_colour = (255, 0, 0)  # Initial color (Red)
 #		set_colour(rgb_tuple=current_colour)
-
-		pixels1.fill((255,0,0))
-		
 		
 		print("Press Enter to input new color or type 'exit' to quit.")
-
+		
 		while True:
 			user_input = input("Press Enter to change colour or 'exit' to quit: ")
 			if user_input.lower() == 'exit':

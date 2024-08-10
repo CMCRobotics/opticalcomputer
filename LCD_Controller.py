@@ -46,7 +46,19 @@ class LCD_Controller:
         cv2.waitKey(0)
         return img
     
-    # def address_grid_8(x:int, y:int, rgb:tuple)->None:
+    def address_grid_8(self,x:int, y:int, rgb:tuple)->Image:
+        img = Image.new('RGB', self.lcd_size, (0, 0, 0))
+        grid_size = self.lcd_size[0] // 8
+        top_left_x = 0
+        top_left_y = 0
+        
+        for i in range(top_left_x, top_left_x + grid_size):
+            for j in range(top_left_y, top_left_y + grid_size):
+                img.putpixel((i, j), rgb)
+        cv2.imwrite("IMG.png", np.array(img))
+        return img
+        # self.display_img(img)
+        
     
     def display_img(self, img: Image) -> None:
         self.lcd.display(img)
@@ -65,9 +77,10 @@ if __name__ == '__main__':
         lcd_control_2 = LCD_Controller(spi=spi1)
         red_color = (255,255,255)
         while True:
-            lcd_control_1.display_img(lcd_control_1.generate_img(red_color,8))
-            lcd_control_2.display_img(lcd_control_2.generate_img(red_color,8))
-            time.sleep(1)
+            lcd_control_1.display_img(lcd_control_1.address_grid_8(1,2,red_color))
+            img_rot = Image.fromarray(cv2.rotate(np.array(lcd_control_2.address_grid_8(1,1,red_color)),cv2.ROTATE_180))
+            lcd_control_2.display_img(lcd_control_2.generate_img((0,0,255),8))
+            # time.sleep(1)
     except KeyboardInterrupt:
         # catching keyboard interrupt to exit, but do the cleanup in finally block
         pass
