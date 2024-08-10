@@ -1,10 +1,20 @@
+# from PIL import Image
+# import third_party.ILI9486 as LCD
+
+
+# class LCD_Controller():
+#     def __init__():
+#         pass
+
 from PIL import Image
 import RPi.GPIO as GPIO
 from spidev import SpiDev
 import time
-import ILI9486 as LCD
-import config
+import third_party.ILI9486 as LCD
+# import ILI9486 as LCD
+import legacy.config as config
 import numpy as np
+import sys
 
 import time
 import board
@@ -14,8 +24,8 @@ import neopixel
 #pixels1 = neopixel.NeoPixel(board.D18, 64, brightness=1)
 
 def set_colour(x=1, y=1, rgb_tuple=(255,0,0)):
-	pixels1[x+y*8].fill(rgb_tuple)
-	pixels1.show()
+    pixels1[x+y*8] = rgb_tuple
+    pixels1.show()
 
 def prompt_user():
     # Prompt user until valid input is given
@@ -89,8 +99,8 @@ if __name__ == '__main__':
 		print(f'Initialized display with landscape mode = {lcd.is_landscape()} and dimensions {lcd.dimensions()}')
 		# NEW ###############################################################
 		pixels1 = neopixel.NeoPixel(board.D18, 64, brightness=1)
-		current_colour = (255, 0, 0)  # Initial color (Red)
-		set_colour(rgb_tuple=current_colour)
+#		current_colour = (255, 0, 0)  # Initial color (Red)
+#		set_colour(rgb_tuple=current_colour)
 		
 		print("Press Enter to input new color or type 'exit' to quit.")
 		
@@ -110,6 +120,10 @@ if __name__ == '__main__':
 			current_color = new_color
 			x = new_x
 			y = new_y
+
+			pixels1.fill((0,0,0))
+			pixels1.show()
+
 			set_colour(x,y,current_color)
 
 ##################################################################################
@@ -128,6 +142,8 @@ if __name__ == '__main__':
         # catching keyboard interrupt to exit, but do the cleanup in finally block
 		pass
 	finally:
+		pixels1.fill((0,0,0))
+		pixels1.show()
 		GPIO.cleanup()
 		spi.close()
 		spi1.close()
