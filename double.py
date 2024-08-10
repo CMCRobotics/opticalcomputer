@@ -18,26 +18,32 @@ def set_colour(x=1, y=1, rgb_tuple=(255,0,0)):
 	pixels1.show()
 
 def prompt_user():
-	# Prompt user
-    # Split the input string by commas
-	while True:
-		try:
-			RGB_input = input("Enter RGB values (e.g., 255,0,0): ")
-			new_x = int(input("Pixel (x): "))
-			new_y = int(input("Pixel (y): "))
-			# Split the string into a list of strings and convert to integers
-			rgb_values = RGB_input.split(',')
-			rgb_tuple = tuple(int(value.strip()) for value in rgb_values)
-			
-			# Validate that we have exactly 3 values (R, G, B)
-			if len(rgb_tuple) != 3:
-				raise ValueError("Enter exactly three values separated by commas.")
-			return new_x, new_y, rgb_tuple
-		
-		except ValueError as e:
-			print(f"Invalid input: {e}")
-			return None
+    # Prompt user until valid input is given
+    while True:
+        try:
+            # Get RGB input and split by commas
+            RGB_input = input("Enter RGB values (e.g., 255,0,0): ")
+            new_x = int(input("Pixel (x): "))
+            new_y = int(input("Pixel (y): "))
 
+            # Convert RGB values to integers and strip any extra spaces
+            rgb_values = RGB_input.split(',')
+            rgb_tuple = tuple(int(value.strip()) for value in rgb_values)
+
+            # Validate that exactly 3 RGB values are provided
+            if len(rgb_tuple) != 3:
+                raise ValueError("Enter exactly three values separated by commas.")
+            
+            # Validate that x and y are non-negative integers
+            if new_x < 0 or new_y < 0:
+                raise ValueError("Pixel coordinates (x, y) must be non-negative integers.")
+            
+            # Return the pixel coordinates and RGB tuple
+            return new_x, new_y, rgb_tuple
+        
+        except ValueError as e:
+            # Print the error and prompt the user again
+            print(f"Invalid input: {e}")
 
 
 def create_image(color, width, height):
@@ -84,7 +90,7 @@ if __name__ == '__main__':
 		# NEW ###############################################################
 		pixels1 = neopixel.NeoPixel(board.D18, 64, brightness=1)
 		current_colour = (255, 0, 0)  # Initial color (Red)
-		set_colour(current_colour)
+		set_colour(rgb_tuple=current_colour)
 		
 		print("Press Enter to input new color or type 'exit' to quit.")
 		
