@@ -103,7 +103,7 @@ if __name__ == '__main__':
 #		set_colour(rgb_tuple=current_colour)
 		
 		print("Press Enter to input new color or type 'exit' to quit.")
-		
+
 		while True:
 			user_input = input("Press Enter to change colour or 'exit' to quit: ")
 			if user_input.lower() == 'exit':

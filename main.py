@@ -2,11 +2,11 @@ from UglyCamera import UglyCamera
 import cv2
 
 class ProcessingUtils():
-    @classmethod
+    @staticmethod
     def crop_img(img):
         return img[100:270, 240:410]
 
-    @classmethod
+    @staticmethod
     def draw_mesh(img):
         h,w = img.shape[:2]
         cell_h = h // 8
@@ -20,6 +20,7 @@ if __name__ == "__main__":
     cam = UglyCamera()
     cam.start()
     for img in cam:
+        print(img.shape)
         img = ProcessingUtils.crop_img(img)
         mesh_img = ProcessingUtils.draw_mesh(img)
 
