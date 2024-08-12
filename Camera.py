@@ -2,7 +2,7 @@ import cv2
 import subprocess
 import numpy as np
 
-class UglyCamera():
+class Camera():
     def __init__(self, height=480, width=640, shutter_ms=100, gain=1, awbgains=(1,1)):
         self.height = height
         self.width = width
@@ -31,7 +31,7 @@ class UglyCamera():
         self.off = True
     
 if __name__ == "__main__":
-    cam = UglyCamera()
+    cam = Camera()
 
     cam.start()
     print("Press Q to exit")
@@ -39,9 +39,6 @@ if __name__ == "__main__":
         cv2.imshow(
             "USB Camera Test", img
         )
-        
         if cv2.waitKey(1) & 0xFF == ord("q"):
             cam.stop()
             cv2.destroyAllWindows()
-
-    

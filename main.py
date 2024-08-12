@@ -1,7 +1,6 @@
-from UglyCamera import UglyCamera
+from Camera import Camera
 import cv2
 import numpy as np
-import json
 
 class ProcessingUtils():
     @staticmethod
@@ -11,17 +10,17 @@ class ProcessingUtils():
         return img
 
     @staticmethod
-    def draw_mesh(img):
+    def draw_mesh(img, grid_size:int = 8, line_color:tuple[int,int,int] = (255,255,255)):
         h,w = img.shape[:2]
-        cell_h = h // 8
-        cell_w = w // 8
+        cell_h = h // grid_size
+        cell_w = w // grid_size
         for i in range(1,8):
-            cv2.line(img, (0, i * cell_h), (w, i*cell_h), (255,255,255), 1)
-            cv2.line(img, (i*cell_w, 0), (i*cell_w, h), (255,255,255), 1)
+            cv2.line(img, (0, i * cell_h), (w, i*cell_h), line_color, 1)
+            cv2.line(img, (i*cell_w, 0), (i*cell_w, h), line_color, 1)
         return img 
 
 if __name__ == "__main__":
-    cam = UglyCamera()
+    cam = Camera()
     cam.start()
 
     for img in cam:
@@ -29,29 +28,23 @@ if __name__ == "__main__":
         print(img.shape)
         img = ProcessingUtils.crop_img(img)
         mesh_img = ProcessingUtils.draw_mesh(img)
-        # cv2.imshow("MESH", mesh_img)
-        # cv2.imwrite("mesh_img.png", mesh_img)
         
         w,h,c = mesh_img.shape
         cell_h = h // 8
         cell_w = w // 8
-        pts1 = np.float32([[56,65],[368,52],[28,387],[389,390]])
-        pts2 = np.float32([[0,0],[300,0],[0,300],[300,300]])
 
-        # Step 3: Compute the perspective transform matrix
-        M = cv2.getPerspectiveTransform(pts1, pts2)
-        warped_image = cv2.warpPerspective(mesh_img, M, (w, h))
         array_camera_res = []
         for i in range(8):
             row = []
             for j in range(8):
                 cell = mesh_img[i * cell_h:(i+1)*cell_h, j*cell_w : (j+1) * cell_w]
                 cell = cell.flatten()
+                # Filter the 255 values
                 cell = cell[cell != 255]
                 if cell.size > 0:
-                    # print(cell)
                     max_val = np.max(cell)
                 else:
+                    # If the are all 255, then the max value should to 255
                     max_val = 255
                 row.append(max_val)
             array_camera_res.append(row)
@@ -63,9 +56,3 @@ if __name__ == "__main__":
         if cv2.waitKey(1) & 0xFF == ord("q"):
             cam.stop()
             cv2.destroyAllWindows()
-        
-        
-
-        # if cv2.waitKey(1) & 0xFF == ord("q") or True:
-        # cam.stop()
-        # cv2.destroyAllWindows()
