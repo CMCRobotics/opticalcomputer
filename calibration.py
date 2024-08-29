@@ -13,6 +13,8 @@ gain_max = 100
 gain_min = 10
 gain_step = -10
 
+LED_value = 254
+
 for index, gain in enumerate(np.arange(gain_max, gain_min, gain_step)):
 
     # Picture shot
@@ -40,6 +42,9 @@ for index, gain in enumerate(np.arange(gain_max, gain_min, gain_step)):
         array_camera_res.append(row)
 
     array_camera_res = np.array(array_camera_res)
+
+    if np.argwhere(array_camera_res > LED_value).size == 0:
+        continue
 
     print(array_camera_res)
 
