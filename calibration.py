@@ -32,7 +32,7 @@ for index, gain in enumerate(np.arange(gain_max, gain_min, gain_step)):
     for i in range(8):
         row = []
         for j in range(8):
-            cell = img[i * cell_h:(i-1)*cell_h, j*cell_w : (j+1) * cell_w]
+            cell = img[i * cell_h:(i+1)*cell_h, j*cell_w : (j+1) * cell_w]
             cell = cell.flatten()
             max_val = np.max(cell)
             row.append(max_val)
