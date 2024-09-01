@@ -8,7 +8,7 @@ class ProcessingUtils():
         img = img[210:400, 240:430]
         return img
 
-    def project_img(img):
+    def project_img(img, collect_coordinates=False, img_src_coordinate=[[19,20], [16,175], [174,177], [169,19]]):
 
         def collect_callback(event, x, y, flags, paste_coordinate_list):
             cv2.imshow('Collect coordinates', img_src_copy)
@@ -17,16 +17,17 @@ class ProcessingUtils():
                 cv2.circle(img_src_copy, (x,y), 2, (255,255,255), -1)
 
         h,w = img.shape[:2]
-        img_src_copy = img.copy()
         img_src_coordinate = []
         img_dest_coordinate = np.array([[0,0], [0,h], [w,h], [w,0]]) # Anticlockwise from top left
 
-        cv2.namedWindow('Collect coordinates')
-        cv2.setMouseCallback('Collect coordinates', collect_callback, img_src_coordinate)
+        if collect_coordinates:
+            img_src_copy = img.copy()
+            cv2.namedWindow('Collect coordinates')
+            cv2.setMouseCallback('Collect coordinates', collect_callback, img_src_coordinate)
 
-        while True:
-            cv2.waitKey(1)
-            if len(img_src_coordinate) == 4: break
+            while True:
+                cv2.waitKey(1)
+                if len(img_src_coordinate) == 4: break
         img_src_coordinate = np.array(img_src_coordinate)
 
         matrix, _ = cv2.findHomography(img_src_coordinate, img_dest_coordinate, 0)
