@@ -17,7 +17,6 @@ class ProcessingUtils():
                 cv2.circle(img_src_copy, (x,y), 2, (255,255,255), -1)
 
         h,w = img.shape[:2]
-        img_src_coordinate = []
         img_dest_coordinate = np.array([[0,0], [0,h], [w,h], [w,0]]) # Anticlockwise from top left
 
         if collect_coordinates:
