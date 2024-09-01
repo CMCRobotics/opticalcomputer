@@ -10,8 +10,8 @@ awbgains=(1,1)
 output_file = 'tmp.png'
 
 gain_max = 1.5
-gain_min = 0,1
-gain_step = -0,1
+gain_min = 0.1
+gain_step = -0.1
 
 LED_value = 255
 
