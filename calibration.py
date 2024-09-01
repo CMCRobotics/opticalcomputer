@@ -18,13 +18,14 @@ LED_value = 254
 for index, gain in enumerate(np.arange(gain_max, gain_min, gain_step)):
 
     # Picture shot
-    cmd_str = f"rpicam-still -o {output_file} --height {height} --width {width} --shutter {shutter_ms * 1000} --gain {gain} --awbgains {','.join([str(val) for val in awbgains])} --immediate --nopreview --vflip"
+    cmd_str = f"rpicam-still -o {output_file} --height {height} --width {width} --shutter {shutter_ms * 1000} --gain {gain} --awbgains {','.join([str(val) for val in awbgains])} --immediate --nopreview --vflip --verbose 0"
     cmd_arr = cmd_str.split(" ")
     subprocess.run(cmd_arr, stdout=subprocess.DEVNULL)
 
     # Picture computation
     img = cv2.imread("tmp.png")
     img = ProcessingUtils.crop_img(img)
+    img = ProcessingUtils.project_img(img)
 
     w,h,c = img.shape
     cell_h = h // 8
