@@ -46,6 +46,9 @@ for index, gain in enumerate(np.arange(gain_max, gain_min, gain_step)):
 
     if np.argwhere(array_camera_res >= LED_value).size != 0:
         continue
+    else:
+        gain_value = gain
+        break
 
-    print(f'Result with gain {gain}:')
-    print(array_camera_res)
+print(f'Result with gain {gain_value}:')
+print(array_camera_res)
