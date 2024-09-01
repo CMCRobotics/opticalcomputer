@@ -9,11 +9,11 @@ shutter_ms=100
 awbgains=(1,1)
 output_file = 'tmp.png'
 
-gain_max = 100
-gain_min = 10
-gain_step = -10
+gain_max = 1.5
+gain_min = 0,1
+gain_step = -0,1
 
-LED_value = 254
+LED_value = 255
 
 for index, gain in enumerate(np.arange(gain_max, gain_min, gain_step)):
 
@@ -44,9 +44,8 @@ for index, gain in enumerate(np.arange(gain_max, gain_min, gain_step)):
 
     array_camera_res = np.array(array_camera_res)
 
-    if np.argwhere(array_camera_res > LED_value).size == 0:
+    if np.argwhere(array_camera_res >= LED_value).size != 0:
         continue
 
+    print(f'Result with gain {gain}:'}
     print(array_camera_res)
-
-    # if max of picture < 255: save and break
